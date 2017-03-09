@@ -1,0 +1,36 @@
+
+
+<h2>Hi <%= @user.alias %></h2>
+<a href="logout">Logout</a> <br><br>
+
+<form class="" action="ideas" method="post">
+  <label>Enter an Idea below:</label><br>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+  <input type="text" name="content" value="">
+  <input type="submit" name="" value="Idea!">
+</form>
+
+
+<table>
+  <thead>
+  <tr>
+    <% @ideas.each do |idea| %>
+    <td><a href="/users/<%= idea.user.id %>"><%= idea.user.name%></a> says:</td>
+    <td><%= idea.content %></td>
+    <td><a href="/ideas/<%= idea.id %>"><%= idea.likes.count %> people like this</td>
+      <td>
+        <form action='/likes' method='post'>
+            <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+            <input type='hidden' name='idea_id' value='<%= idea.id %>'>
+            <button type='submit'>Like</button>
+          </form>
+      </td>
+    <td>
+    <% if @user.id == idea.user_id %>
+      <a data-method = "delete" href="/ideas/<%=idea.id %>">Delete</a></td>
+      </form>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+</table>
